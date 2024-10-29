@@ -1,0 +1,110 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.linalg import eigh
+from scipy.integrate import odeint
+
+# 固有値解析 (Eigenvalue Analysis)
+def eigenvalue_analysis(mass_matrix, stiffness_matrix):
+    """
+    質量行列と剛性行列から固有値と固有ベクトルを計算する関数
+    Calculates eigenvalues and eigenvectors from mass and stiffness matrices.
+    
+    Parameters:
+    mass_matrix (2D array): 質量行列 (Mass matrix)
+    stiffness_matrix (2D array): 剛性行列 (Stiffness matrix)
+    
+    Returns:
+    tuple: 固有値 (eigenvalues) と固有ベクトル (eigenvectors)
+    """
+    eigenvalues, eigenvectors = eigh(stiffness_matrix, mass_matrix)
+    return eigenvalues, eigenvectors
+
+# 自由振動 (Free Vibration)
+def free_vibration_response(eigenvalues, initial_conditions, time_span):
+    """
+    固有振動数に基づく自由振動の応答を計算する関数
+    Calculates free vibration response based on eigenvalues.
+    
+    Parameters:
+    eigenvalues (1D array): 固有値 (Eigenvalues)
+    initial_conditions (tuple): 初期位置と速度 (Initial position and velocity)
+    time_span (1D array): 時間配列 (Time array)
+    
+    Returns:
+    2D array: 自由振動の位置応答 (Displacement response over time)
+    """
+    natural_frequencies = np.sqrt(eigenvalues)
+    response = np.array([
+        initial_conditions[0] * np.cos(omega * time_span) + 
+        (initial_conditions[1] / omega) * np.sin(omega * time_span)
+        for omega in natural_frequencies
+    ])
+    return response
+
+# 強制振動 (Forced Vibration)
+def forced_vibration_response(mass, damping, stiffness, forcing_function, initial_conditions, time_span):
+    """
+    強制振動応答を計算する関数
+    Calculates forced vibration response with given mass, damping, and stiffness.
+    
+    Parameters:
+    mass (float): 質量 (Mass)
+    damping (float): 減衰係数 (Damping coefficient)
+    stiffness (float): 剛性 (Stiffness)
+    forcing_function (function): 外力関数 (External force function)
+    initial_conditions (tuple): 初期位置と速度 (Initial position and velocity)
+    time_span (1D array): 時間配列 (Time array)
+    
+    Returns:
+    1D array: 強制振動の位置応答 (Displacement response over time)
+    """
+    def equation_of_motion(y, t):
+        x, v = y
+        dxdt = v
+        dvdt = (forcing_function(t) - damping * v - stiffness * x) / mass
+        return [dxdt, dvdt]
+    
+    solution = odeint(equation_of_motion, initial_conditions, time_span)
+    return solution[:, 0]  # 位置応答のみ返す
+
+# テスト例 (Example usage)
+
+# 固有値解析 (Eigenvalue Analysis)
+mass_matrix = np.array([[2.0, 0.0], [0.0, 1.5]])  # 質量行列 (Mass matrix)
+stiffness_matrix = np.array([[100.0, -50.0], [-50.0, 50.0]])  # 剛性行列 (Stiffness matrix)
+eigenvalues, eigenvectors = eigenvalue_analysis(mass_matrix, stiffness_matrix)
+print("固有値 (Eigenvalues):", eigenvalues)
+print("固有ベクトル (Eigenvectors):\n", eigenvectors)
+
+# 自由振動解析 (Free Vibration)
+initial_conditions = (1.0, 0.0)  # 初期位置と初期速度
+time_span = np.linspace(0, 10, 500)  # 時間配列
+free_response = free_vibration_response(eigenvalues, initial_conditions, time_span)
+
+# 自由振動応答のプロット (Plot Free Vibration Response)
+for i, response in enumerate(free_response):
+    plt.plot(time_span, response, label=f"Free Vibration (Mode {i+1})")
+plt.xlabel("Time (s)")
+plt.ylabel("Displacement (m)")
+plt.title("Free Vibration Response")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# 強制振動解析 (Forced Vibration)
+mass = 1.0  # 質量 (kg)
+damping = 0.1  # 減衰係数 (Ns/m)
+stiffness = 50.0  # 剛性 (N/m)
+forcing_function = lambda t: 10 * np.cos(2 * np.pi * 1.0 * t)  # 外力 (N)
+initial_conditions = (0.0, 0.0)  # 初期位置と初期速度
+
+forced_response = forced_vibration_response(mass, damping, stiffness, forcing_function, initial_conditions, time_span)
+
+# 強制振動応答のプロット (Plot Forced Vibration Response)
+plt.plot(time_span, forced_response, label="Forced Vibration")
+plt.xlabel("Time (s)")
+plt.ylabel("Displacement (m)")
+plt.title("Forced Vibration Response")
+plt.legend()
+plt.grid(True)
+plt.show()
