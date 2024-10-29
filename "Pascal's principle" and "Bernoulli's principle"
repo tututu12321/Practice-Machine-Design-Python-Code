@@ -1,0 +1,68 @@
+import math
+
+# パスカルの原理 (Pascal's Principle)
+# 圧力は流体中で均一に分布されるため、P1 = P2
+# 力 F2 は F1, A1, A2 により次のように求まる: F2 = F1 * (A2 / A1)
+
+def pascal_principle(force1, area1, area2):
+    """
+    パスカルの原理を使って第二の力を計算する関数
+    Calculates the force on a second area using Pascal's principle.
+    
+    Parameters:
+    force1 (float): 最初の力 (N)
+    area1 (float): 最初の面積 (m^2)
+    area2 (float): 第二の面積 (m^2)
+    
+    Returns:
+    float: 第二の力 (N)
+    """
+    force2 = force1 * (area2 / area1)
+    return force2
+
+
+# ベルヌーイの定理 (Bernoulli's Equation)
+# P1 + 0.5 * ρ * v1^2 + ρ * g * h1 = P2 + 0.5 * ρ * v2^2 + ρ * g * h2
+
+def bernoulli_theorem(pressure1, density, velocity1, height1, velocity2, height2):
+    """
+    ベルヌーイの定理を使って第二の圧力を計算する関数
+    Calculates the second pressure using Bernoulli's theorem.
+    
+    Parameters:
+    pressure1 (float): 最初の圧力 (Pa)
+    density (float): 流体の密度 (kg/m^3)
+    velocity1 (float): 最初の流速 (m/s)
+    height1 (float): 最初の高さ (m)
+    velocity2 (float): 第二の流速 (m/s)
+    height2 (float): 第二の高さ (m)
+    
+    Returns:
+    float: 第二の圧力 (Pa)
+    """
+    g = 9.81  # 重力加速度 (m/s^2)
+    
+    # ベルヌーイの式からP2を求める
+    pressure2 = pressure1 + 0.5 * density * (velocity1 ** 2 - velocity2 ** 2) + density * g * (height1 - height2)
+    return pressure2
+
+
+# テスト例 (Example usage)
+
+# パスカルの原理の例
+force1 = 100.0  # 最初の力 (N)
+area1 = 0.01  # 最初の面積 (m^2)
+area2 = 0.1  # 第二の面積 (m^2)
+force2 = pascal_principle(force1, area1, area2)
+print(f"第二の力 (Force on Area 2): {force2} N")
+
+# ベルヌーイの定理の例
+pressure1 = 100000.0  # 最初の圧力 (Pa)
+density = 1000.0  # 流体の密度 (水の場合、kg/m^3)
+velocity1 = 5.0  # 最初の流速 (m/s)
+height1 = 10.0  # 最初の高さ (m)
+velocity2 = 10.0  # 第二の流速 (m/s)
+height2 = 5.0  # 第二の高さ (m)
+
+pressure2 = bernoulli_theorem(pressure1, density, velocity1, height1, velocity2, height2)
+print(f"第二の圧力 (Pressure at Point 2): {pressure2} Pa")
