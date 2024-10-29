@@ -1,0 +1,153 @@
+import numpy as np
+
+# 3.1.2 圧縮性 (Compressibility)
+# 圧縮性係数: β = -(ΔV / V) / ΔP
+
+def compressibility(initial_volume, final_volume, pressure_change):
+    """
+    圧縮性係数を計算する関数
+    Calculates the compressibility coefficient.
+    
+    Parameters:
+    initial_volume (float): 初期体積 (m^3)
+    final_volume (float): 最終体積 (m^3)
+    pressure_change (float): 圧力の変化 (Pa)
+    
+    Returns:
+    float: 圧縮性係数 (1/Pa)
+    """
+    volume_change = final_volume - initial_volume
+    return -volume_change / (initial_volume * pressure_change)
+
+
+# 3.1.3 粘性 (Viscosity)
+# 動粘性係数 μ = τ / (du/dy)
+
+def calculate_viscosity(shear_stress, velocity_gradient):
+    """
+    せん断応力と速度勾配から動粘性係数を計算する関数
+    Calculates viscosity based on shear stress and velocity gradient.
+    
+    Parameters:
+    shear_stress (float): せん断応力 (Pa)
+    velocity_gradient (float): 速度勾配 (1/s)
+    
+    Returns:
+    float: 動粘性係数 (Pa·s)
+    """
+    return shear_stress / velocity_gradient
+
+
+# 3.2.1 圧力とその測定 (Pressure and Measurement)
+# 圧力 P = F / A
+
+def calculate_pressure(force, area):
+    """
+    力と面積から圧力を計算する関数
+    Calculates pressure from force and area.
+    
+    Parameters:
+    force (float): 力 (N)
+    area (float): 面積 (m^2)
+    
+    Returns:
+    float: 圧力 (Pa)
+    """
+    return force / area
+
+
+# 3.2.2 マノメータ (Manometer)
+# 圧力 P = ρ * g * h
+
+def manometer_pressure(density, gravity, height):
+    """
+    マノメータの液柱の高さから圧力を計算する関数
+    Calculates pressure based on manometer height.
+    
+    Parameters:
+    density (float): 液体の密度 (kg/m^3)
+    gravity (float): 重力加速度 (m/s^2)
+    height (float): 液柱の高さ (m)
+    
+    Returns:
+    float: 圧力 (Pa)
+    """
+    return density * gravity * height
+
+
+# 3.2.3 平面板に作用する圧力 (Pressure on a Plane Surface)
+# 垂直に配置された平面板に対する圧力 F = P * A
+
+def force_on_plane_surface(pressure, area):
+    """
+    平面板に作用する力を計算する関数
+    Calculates the force acting on a plane surface.
+    
+    Parameters:
+    pressure (float): 圧力 (Pa)
+    area (float): 平面板の面積 (m^2)
+    
+    Returns:
+    float: 力 (N)
+    """
+    return pressure * area
+
+
+# 3.2.4 浮力 (Buoyancy)
+# 浮力 F = ρ * V * g
+
+def buoyant_force(density, volume, gravity=9.81):
+    """
+    流体の密度と物体の体積から浮力を計算する関数
+    Calculates buoyant force based on fluid density and volume of object.
+    
+    Parameters:
+    density (float): 流体の密度 (kg/m^3)
+    volume (float): 物体の体積 (m^3)
+    gravity (float): 重力加速度 (m/s^2, default=9.81)
+    
+    Returns:
+    float: 浮力 (N)
+    """
+    return density * volume * gravity
+
+
+# テスト例 (Example usage)
+
+# 3.1.2 圧縮性の計算
+initial_volume = 1.0  # m^3
+final_volume = 0.95  # m^3
+pressure_change = 100000  # Pa
+compressibility_value = compressibility(initial_volume, final_volume, pressure_change)
+print(f"圧縮性係数 (Compressibility): {compressibility_value} 1/Pa")
+
+# 3.1.3 粘性の計算
+shear_stress = 0.5  # Pa
+velocity_gradient = 10  # 1/s
+viscosity = calculate_viscosity(shear_stress, velocity_gradient)
+print(f"動粘性係数 (Viscosity): {viscosity} Pa·s")
+
+# 3.2.1 圧力の計算
+force = 100  # N
+area = 0.02  # m^2
+pressure = calculate_pressure(force, area)
+print(f"圧力 (Pressure): {pressure} Pa")
+
+# 3.2.2 マノメータの圧力
+density = 1000  # kg/m^3 (水の場合)
+gravity = 9.81  # m/s^2
+height = 0.5  # m
+manometer_pressure_value = manometer_pressure(density, gravity, height)
+print(f"マノメータの圧力 (Manometer Pressure): {manometer_pressure_value} Pa")
+
+# 3.2.3 平面板に作用する圧力
+pressure = 2000  # Pa
+area = 1.5  # m^2
+force_on_surface = force_on_plane_surface(pressure, area)
+print(f"平面板に作用する力 (Force on Plane Surface): {force_on_surface} N")
+
+# 3.2.4 浮力の計算
+fluid_density = 1000  # kg/m^3 (水の場合)
+object_volume = 0.03  # m^3
+buoyant_force_value = buoyant_force(fluid_density, object_volume)
+print(f"浮力 (Buoyant Force): {buoyant_force_value} N")
