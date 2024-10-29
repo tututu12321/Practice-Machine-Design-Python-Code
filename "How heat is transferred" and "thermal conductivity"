@@ -1,0 +1,64 @@
+import numpy as np
+
+# 熱の伝わり方 (Heat Transfer)
+# 熱伝導方程式: Q = k * A * ΔT / d
+# Q = 熱流量 (W), k = 熱伝導率 (W/m·K), A = 断面積 (m^2), ΔT = 温度差 (K), d = 材料の厚さ (m)
+
+def heat_transfer(conductivity, area, temperature_difference, thickness):
+    """
+    熱伝導による熱流量を計算する関数
+    Calculates heat transfer through conduction.
+    
+    Parameters:
+    conductivity (float): 熱伝導率 (W/m·K)
+    area (float): 断面積 (m^2)
+    temperature_difference (float): 温度差 (K)
+    thickness (float): 材料の厚さ (m)
+    
+    Returns:
+    float: 熱流量 (W)
+    """
+    heat_flux = conductivity * area * temperature_difference / thickness
+    return heat_flux
+
+
+# 熱伝導率 (Thermal Conductivity)
+# 材料の熱伝導率 k を決定するために、既知の材料データまたは測定値が必要
+# ここでは熱流量から熱伝導率を逆算する例を示す: k = Q * d / (A * ΔT)
+
+def calculate_conductivity(heat_flux, area, temperature_difference, thickness):
+    """
+    熱流量から熱伝導率を計算する関数
+    Calculates thermal conductivity based on heat transfer.
+    
+    Parameters:
+    heat_flux (float): 熱流量 (W)
+    area (float): 断面積 (m^2)
+    temperature_difference (float): 温度差 (K)
+    thickness (float): 材料の厚さ (m)
+    
+    Returns:
+    float: 熱伝導率 (W/m·K)
+    """
+    conductivity = heat_flux * thickness / (area * temperature_difference)
+    return conductivity
+
+
+# テスト例 (Example usage)
+
+# 熱の伝わり方の例
+conductivity = 200.0  # 熱伝導率 (W/m·K) - 銅の例
+area = 0.01  # 断面積 (m^2)
+temperature_difference = 50.0  # 温度差 (K)
+thickness = 0.005  # 材料の厚さ (m)
+heat_flux = heat_transfer(conductivity, area, temperature_difference, thickness)
+print(f"熱流量 (Heat Flux): {heat_flux} W")
+
+# 熱伝導率の例
+# 既知の熱流量から熱伝導率を逆算
+heat_flux = 100.0  # 熱流量 (W)
+area = 0.01  # 断面積 (m^2)
+temperature_difference = 50.0  # 温度差 (K)
+thickness = 0.005  # 材料の厚さ (m)
+calculated_conductivity = calculate_conductivity(heat_flux, area, temperature_difference, thickness)
+print(f"計算された熱伝導率 (Calculated Conductivity): {calculated_conductivity} W/m·K")
