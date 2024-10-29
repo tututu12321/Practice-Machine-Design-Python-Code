@@ -1,0 +1,37 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def stress_strain_plot(force_list, deformation_list, original_length, cross_sectional_area):
+    """
+    応力-ひずみ線図をプロットする関数
+    Plots the stress-strain diagram.
+    
+    Parameters:
+    force_list (list): 荷重のリスト (N)
+    deformation_list (list): 変形量のリスト (m)
+    original_length (float): 元の長さ (m)
+    cross_sectional_area (float): 断面積 (m^2)
+    """
+    # 応力 (Stress) の計算
+    stress = [f / cross_sectional_area for f in force_list]
+    
+    # ひずみ (Strain) の計算
+    strain = [d / original_length for d in deformation_list]
+    
+    # 応力-ひずみ線図のプロット
+    plt.plot(strain, stress, label="Stress-Strain Curve", marker='o')
+    plt.xlabel("Strain (m/m)")
+    plt.ylabel("Stress (Pa or N/m^2)")
+    plt.title("Stress-Strain Diagram")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+# サンプルデータ
+force_list = [0, 1000, 2000, 3000, 4000, 5000]  # 荷重 (N)
+deformation_list = [0, 0.002, 0.004, 0.006, 0.008, 0.01]  # 変形量 (m)
+original_length = 1.0  # 元の長さ (m)
+cross_sectional_area = 0.002  # 断面積 (m^2)
+
+# 関数の呼び出し
+stress_strain_plot(force_list, deformation_list, original_length, cross_sectional_area)
