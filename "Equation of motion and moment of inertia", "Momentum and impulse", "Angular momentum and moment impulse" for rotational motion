@@ -1,0 +1,111 @@
+import numpy as np
+
+# 1.2.3 回転運動の運動方程式と慣性モーメント (Equation of Rotational Motion and Moment of Inertia)
+# 回転運動の運動方程式: τ = I * α (トルク = 慣性モーメント * 角加速度)
+
+def rotational_motion(torque, moment_of_inertia):
+    """
+    トルクと慣性モーメントから角加速度を計算する関数
+    Calculates angular acceleration based on torque and moment of inertia.
+    
+    Parameters:
+    torque (float): トルク (N·m)
+    moment_of_inertia (float): 慣性モーメント (kg·m^2)
+    
+    Returns:
+    float: 角加速度 (rad/s^2)
+    """
+    angular_acceleration = torque / moment_of_inertia
+    return angular_acceleration
+
+
+# 1.2.4 運動量と力積 (Momentum and Impulse)
+# 運動量 p = m * v, 力積 I = F * Δt
+
+def momentum(mass, velocity):
+    """
+    質量と速度から運動量を計算する関数
+    Calculates momentum based on mass and velocity.
+    
+    Parameters:
+    mass (float): 質量 (kg)
+    velocity (float): 速度 (m/s)
+    
+    Returns:
+    float: 運動量 (kg·m/s)
+    """
+    return mass * velocity
+
+def impulse(force, time_interval):
+    """
+    力と時間間隔から力積を計算する関数
+    Calculates impulse based on force and time interval.
+    
+    Parameters:
+    force (float): 力 (N)
+    time_interval (float): 時間間隔 (s)
+    
+    Returns:
+    float: 力積 (N·s or kg·m/s)
+    """
+    return force * time_interval
+
+
+# 1.2.5 角運動量とモーメントの力積 (Angular Momentum and Moment of Impulse)
+# 角運動量 L = I * ω, モーメントの力積 J = τ * Δt
+
+def angular_momentum(moment_of_inertia, angular_velocity):
+    """
+    慣性モーメントと角速度から角運動量を計算する関数
+    Calculates angular momentum based on moment of inertia and angular velocity.
+    
+    Parameters:
+    moment_of_inertia (float): 慣性モーメント (kg·m^2)
+    angular_velocity (float): 角速度 (rad/s)
+    
+    Returns:
+    float: 角運動量 (kg·m^2/s)
+    """
+    return moment_of_inertia * angular_velocity
+
+def moment_of_impulse(torque, time_interval):
+    """
+    トルクと時間間隔からモーメントの力積を計算する関数
+    Calculates moment of impulse based on torque and time interval.
+    
+    Parameters:
+    torque (float): トルク (N·m)
+    time_interval (float): 時間間隔 (s)
+    
+    Returns:
+    float: モーメントの力積 (N·m·s or kg·m^2/s)
+    """
+    return torque * time_interval
+
+
+# テスト例 (Example usage)
+
+# 1.2.3 回転運動の運動方程式と慣性モーメント
+torque = 10.0  # トルク (N·m)
+moment_of_inertia = 2.0  # 慣性モーメント (kg·m^2)
+angular_acceleration = rotational_motion(torque, moment_of_inertia)
+print(f"角加速度 (Angular Acceleration): {angular_acceleration} rad/s^2")
+
+# 1.2.4 運動量と力積
+mass = 5.0  # 質量 (kg)
+velocity = 3.0  # 速度 (m/s)
+momentum_value = momentum(mass, velocity)
+print(f"運動量 (Momentum): {momentum_value} kg·m/s")
+
+force = 20.0  # 力 (N)
+time_interval = 4.0  # 時間間隔 (s)
+impulse_value = impulse(force, time_interval)
+print(f"力積 (Impulse): {impulse_value} N·s or kg·m/s")
+
+# 1.2.5 角運動量とモーメントの力積
+angular_velocity = 5.0  # 角速度 (rad/s)
+angular_momentum_value = angular_momentum(moment_of_inertia, angular_velocity)
+print(f"角運動量 (Angular Momentum): {angular_momentum_value} kg·m^2/s")
+
+moment_of_impulse_value = moment_of_impulse(torque, time_interval)
+print(f"モーメントの力積 (Moment of Impulse): {moment_of_impulse_value} N·m·s or kg·m^2/s")
