@@ -1,0 +1,144 @@
+import numpy as np
+
+# 3.3.5 運動量の法則 (Conservation of Momentum)
+def momentum_conservation(mass_flow_rate, velocity_in, velocity_out):
+    """
+    質量流量と流体の速度変化から運動量の変化を計算する関数
+    Calculates the change in momentum based on mass flow rate and fluid velocity.
+    
+    Parameters:
+    mass_flow_rate (float): 質量流量 (kg/s)
+    velocity_in (float): 流体の入口速度 (m/s)
+    velocity_out (float): 流体の出口速度 (m/s)
+    
+    Returns:
+    float: 運動量の変化 (N)
+    """
+    return mass_flow_rate * (velocity_out - velocity_in)
+
+
+# 3.4.1 レイノルズ数， 層流と乱流 (Reynolds Number)
+def reynolds_number(density, velocity, diameter, viscosity):
+    """
+    レイノルズ数を計算する関数
+    Calculates Reynolds number.
+    
+    Parameters:
+    density (float): 流体の密度 (kg/m^3)
+    velocity (float): 流体の速度 (m/s)
+    diameter (float): 流体が流れる管の直径 (m)
+    viscosity (float): 流体の粘性係数 (Pa·s)
+    
+    Returns:
+    float: レイノルズ数
+    """
+    return (density * velocity * diameter) / viscosity
+
+# 3.4.4 管摩擦 (Pipe Friction)
+def pipe_friction_loss(length, diameter, density, velocity, friction_factor):
+    """
+    管摩擦によるエネルギー損失を計算する関数
+    Calculates energy loss due to pipe friction.
+    
+    Parameters:
+    length (float): 管の長さ (m)
+    diameter (float): 管の直径 (m)
+    density (float): 流体の密度 (kg/m^3)
+    velocity (float): 流体の速度 (m/s)
+    friction_factor (float): 摩擦係数 (dimensionless)
+    
+    Returns:
+    float: エネルギー損失 (Pa)
+    """
+    return friction_factor * (length / diameter) * (density * velocity**2) / 2
+
+# 3.4.5 管路抵抗 (Pipe Resistance)
+def pipe_resistance(density, velocity, resistance_coefficient):
+    """
+    管路抵抗によるエネルギー損失を計算する関数
+    Calculates energy loss due to pipe resistance.
+    
+    Parameters:
+    density (float): 流体の密度 (kg/m^3)
+    velocity (float): 流体の速度 (m/s)
+    resistance_coefficient (float): 管路抵抗係数 (dimensionless)
+    
+    Returns:
+    float: エネルギー損失 (Pa)
+    """
+    return resistance_coefficient * (density * velocity**2) / 2
+
+
+# 3.5.1 境界層 (Boundary Layer)
+def boundary_layer_thickness(velocity, distance, kinematic_viscosity):
+    """
+    境界層厚さを計算する関数
+    Calculates boundary layer thickness.
+    
+    Parameters:
+    velocity (float): 流体の速度 (m/s)
+    distance (float): 流体が流れる表面の距離 (m)
+    kinematic_viscosity (float): 流体の動粘性係数 (m^2/s)
+    
+    Returns:
+    float: 境界層厚さ (m)
+    """
+    return 5.0 * (kinematic_viscosity * distance / velocity)**0.5
+
+# 3.5.3 流れの中の物体の抵抗 (Drag Force on an Object in Flow)
+def drag_force(density, velocity, drag_coefficient, area):
+    """
+    物体に作用する抵抗力を計算する関数
+    Calculates drag force acting on an object in a fluid flow.
+    
+    Parameters:
+    density (float): 流体の密度 (kg/m^3)
+    velocity (float): 流体の速度 (m/s)
+    drag_coefficient (float): 抵抗係数 (dimensionless)
+    area (float): 物体の断面積 (m^2)
+    
+    Returns:
+    float: 抵抗力 (N)
+    """
+    return 0.5 * density * velocity**2 * drag_coefficient * area
+
+
+# テスト例 (Example usage)
+
+# 3.3.5 運動量の法則
+mass_flow_rate = 1.5  # kg/s
+velocity_in = 2.0  # m/s
+velocity_out = 5.0  # m/s
+momentum_change = momentum_conservation(mass_flow_rate, velocity_in, velocity_out)
+print(f"運動量の変化 (Change in Momentum): {momentum_change} N")
+
+# 3.4.1 レイノルズ数
+density = 1000  # kg/m^3
+velocity = 2.0  # m/s
+diameter = 0.1  # m
+viscosity = 0.001  # Pa·s
+Re = reynolds_number(density, velocity, diameter, viscosity)
+print(f"レイノルズ数 (Reynolds Number): {Re}")
+
+# 3.4.4 管摩擦
+length = 10.0  # m
+friction_factor = 0.02  # dimensionless
+pipe_friction = pipe_friction_loss(length, diameter, density, velocity, friction_factor)
+print(f"管摩擦によるエネルギー損失 (Pipe Friction Loss): {pipe_friction} Pa")
+
+# 3.4.5 管路抵抗
+resistance_coefficient = 1.2  # dimensionless
+pipe_resistance_value = pipe_resistance(density, velocity, resistance_coefficient)
+print(f"管路抵抗によるエネルギー損失 (Pipe Resistance Loss): {pipe_resistance_value} Pa")
+
+# 3.5.1 境界層
+distance = 1.0  # m
+kinematic_viscosity = 1.5e-5  # m^2/s
+boundary_layer = boundary_layer_thickness(velocity, distance, kinematic_viscosity)
+print(f"境界層厚さ (Boundary Layer Thickness): {boundary_layer} m")
+
+# 3.5.3 流れの中の物体の抵抗
+drag_coefficient = 0.47  # dimensionless (example for a sphere)
+area = 0.05  # m^2
+drag = drag_force(density, velocity, drag_coefficient, area)
+print(f"抵抗力 (Drag Force): {drag} N")
