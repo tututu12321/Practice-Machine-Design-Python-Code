@@ -1,0 +1,47 @@
+# SI接頭語と単位変換
+# 力の単位（N）と圧力の単位（Pa）に対応
+
+# 力の単位変換
+def convert_force(value, prefix=''):
+    """
+    Convert a force value with an SI prefix to Newtons (N).
+    Arguments:
+    value -- the numeric value to convert
+    prefix -- SI prefix as a string (e.g., 'k' for kilo, 'm' for milli)
+    """
+    si_prefixes = {
+        '': 1,     # Base unit
+        'k': 1e3,  # kilo
+        'M': 1e6,  # mega
+        'G': 1e9,  # giga
+        'm': 1e-3, # milli
+        'u': 1e-6, # micro
+        'n': 1e-9  # nano
+    }
+    return value * si_prefixes.get(prefix, 1)  # Return value in Newtons
+
+# 圧力の単位変換
+def convert_pressure(value, prefix=''):
+    """
+    Convert a pressure value with an SI prefix to Pascals (Pa).
+    Arguments:
+    value -- the numeric value to convert
+    prefix -- SI prefix as a string (e.g., 'k' for kilo, 'm' for milli)
+    """
+    si_prefixes = {
+        '': 1,     # Base unit
+        'k': 1e3,  # kilo
+        'M': 1e6,  # mega
+        'G': 1e9,  # giga
+        'm': 1e-3, # milli
+        'u': 1e-6, # micro
+        'n': 1e-9  # nano
+    }
+    return value * si_prefixes.get(prefix, 1)  # Return value in Pascals
+
+# Examples of usage
+force_in_newtons = convert_force(10, 'k')  # 10 kiloNewtons to Newtons
+pressure_in_pascals = convert_pressure(500, 'm')  # 500 milliPascals to Pascals
+
+print(f"Force: {force_in_newtons} N")
+print(f"Pressure: {pressure_in_pascals} Pa")
