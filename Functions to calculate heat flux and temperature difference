@@ -1,0 +1,55 @@
+# フーリエの法則に基づく熱流束と温度差の計算
+
+# 熱流束 q = -k * (T1 - T2) / t
+def heat_flux_fourier(thermal_conductivity, T1, T2, thickness):
+    """
+    フーリエの法則を用いて熱流束を計算する関数
+    Calculates heat flux using Fourier's Law.
+    
+    Parameters:
+    thermal_conductivity (float): 熱伝導率 (W/m·K)
+    T1 (float): 高温側の温度 (K)
+    T2 (float): 低温側の温度 (K)
+    thickness (float): 壁の厚さ (m)
+    
+    Returns:
+    float: 熱流束 (W/m^2)
+    """
+    return -thermal_conductivity * (T1 - T2) / thickness
+
+
+# 温度差 T2 - T1 = (Q * t) / (k * A)
+def temperature_difference_fourier(heat_flow, thickness, thermal_conductivity, area):
+    """
+    フーリエの法則を用いて温度差を計算する関数
+    Calculates temperature difference using Fourier's Law.
+    
+    Parameters:
+    heat_flow (float): 熱流量 (W)
+    thickness (float): 壁の厚さ (m)
+    thermal_conductivity (float): 熱伝導率 (W/m·K)
+    area (float): 面積 (m^2)
+    
+    Returns:
+    float: 温度差 (K)
+    """
+    return (heat_flow * thickness) / (thermal_conductivity * area)
+
+
+# テスト例 (Example usage)
+
+# 入力パラメータの設定
+thermal_conductivity = 45  # W/m·K (例: コンクリート)
+T1 = 300  # 高温側の温度 (K)
+T2 = 280  # 低温側の温度 (K)
+thickness = 0.05  # 壁の厚さ (m)
+area = 1.0  # 面積 (m^2)
+heat_flow = 100  # 熱流量 (W)
+
+# 熱流束の計算
+heat_flux = heat_flux_fourier(thermal_conductivity, T1, T2, thickness)
+print(f"熱流束 (Heat Flux): {heat_flux} W/m^2")
+
+# 温度差の計算
+temperature_difference = temperature_difference_fourier(heat_flow, thickness, thermal_conductivity, area)
+print(f"温度差 (Temperature Difference): {temperature_difference} K")
