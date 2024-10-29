@@ -1,0 +1,128 @@
+import numpy as np
+
+# 4.8.1 フーリエの式 (Fourier's Law)
+# Q = -k * A * dT/dx
+
+def fourier_law(thermal_conductivity, area, temperature_gradient):
+    """
+    フーリエの式を用いて熱流量を計算する関数
+    Calculates heat flux using Fourier's Law.
+    
+    Parameters:
+    thermal_conductivity (float): 熱伝導率 (W/m·K)
+    area (float): 面積 (m^2)
+    temperature_gradient (float): 温度勾配 (K/m)
+    
+    Returns:
+    float: 熱流量 (W)
+    """
+    return -thermal_conductivity * area * temperature_gradient
+
+
+# 4.8.2 熱の移動 (Heat Transfer)
+# Q = h * A * ΔT (対流熱伝達)
+
+def convective_heat_transfer(convective_coefficient, area, temperature_difference):
+    """
+    対流熱伝達式を用いて熱流量を計算する関数
+    Calculates convective heat transfer.
+    
+    Parameters:
+    convective_coefficient (float): 対流熱伝達係数 (W/m^2·K)
+    area (float): 面積 (m^2)
+    temperature_difference (float): 温度差 (K)
+    
+    Returns:
+    float: 熱流量 (W)
+    """
+    return convective_coefficient * area * temperature_difference
+
+
+# 4.8.3 熱伝導の基礎方程式 (Basic Equation of Heat Conduction)
+# Q = (k * A * ΔT) / d
+
+def heat_conduction_basic(thermal_conductivity, area, temperature_difference, thickness):
+    """
+    基礎的な熱伝導式を用いて熱流量を計算する関数
+    Calculates heat conduction based on basic equation.
+    
+    Parameters:
+    thermal_conductivity (float): 熱伝導率 (W/m·K)
+    area (float): 面積 (m^2)
+    temperature_difference (float): 温度差 (K)
+    thickness (float): 材料の厚さ (m)
+    
+    Returns:
+    float: 熱流量 (W)
+    """
+    return (thermal_conductivity * area * temperature_difference) / thickness
+
+
+# 4.8.4 無限平板内の温度分布と熱流束 (Temperature Distribution and Heat Flux in an Infinite Slab)
+# T(x) = T1 + (T2 - T1) * (x / d)
+# q(x) = -k * dT/dx
+
+def temperature_distribution_in_slab(T1, T2, x, thickness):
+    """
+    無限平板内の位置xでの温度を計算する関数
+    Calculates temperature at position x in an infinite slab.
+    
+    Parameters:
+    T1 (float): 平板の片側の温度 (K)
+    T2 (float): 平板の反対側の温度 (K)
+    x (float): 位置 (m)
+    thickness (float): 平板の厚さ (m)
+    
+    Returns:
+    float: 位置xでの温度 (K)
+    """
+    return T1 + (T2 - T1) * (x / thickness)
+
+def heat_flux_in_slab(thermal_conductivity, T1, T2, thickness):
+    """
+    無限平板内の熱流束を計算する関数
+    Calculates heat flux in an infinite slab.
+    
+    Parameters:
+    thermal_conductivity (float): 熱伝導率 (W/m·K)
+    T1 (float): 平板の片側の温度 (K)
+    T2 (float): 平板の反対側の温度 (K)
+    thickness (float): 平板の厚さ (m)
+    
+    Returns:
+    float: 熱流束 (W/m^2)
+    """
+    temperature_gradient = (T2 - T1) / thickness
+    return -thermal_conductivity * temperature_gradient
+
+
+# テスト例 (Example usage)
+
+# 4.8.1 フーリエの式
+thermal_conductivity = 200  # W/m·K (for example, copper)
+area = 0.1  # m^2
+temperature_gradient = 50  # K/m
+heat_flux = fourier_law(thermal_conductivity, area, temperature_gradient)
+print(f"熱流量 (Heat Flux using Fourier's Law): {heat_flux} W")
+
+# 4.8.2 熱の移動 (対流)
+convective_coefficient = 25  # W/m^2·K
+temperature_difference = 30  # K
+convective_heat = convective_heat_transfer(convective_coefficient, area, temperature_difference)
+print(f"熱流量 (Convective Heat Transfer): {convective_heat} W")
+
+# 4.8.3 熱伝導の基礎方程式
+thickness = 0.02  # m
+heat_conduction = heat_conduction_basic(thermal_conductivity, area, temperature_difference, thickness)
+print(f"熱流量 (Heat Conduction): {heat_conduction} W")
+
+# 4.8.4 無限平板内の温度分布
+T1 = 300  # K
+T2 = 350  # K
+x = 0.01  # m (位置)
+temperature_at_x = temperature_distribution_in_slab(T1, T2, x, thickness)
+print(f"位置xでの温度 (Temperature at x): {temperature_at_x} K")
+
+# 無限平板内の熱流束
+heat_flux_slab = heat_flux_in_slab(thermal_conductivity, T1, T2, thickness)
+print(f"無限平板内の熱流束 (Heat Flux in Slab): {heat_flux_slab} W/m^2")
