@@ -1,0 +1,163 @@
+import numpy as np
+
+# 4.1.1 温度と熱 (Temperature and Heat)
+def calculate_heat(mass, specific_heat, temperature_change):
+    """
+    質量、比熱、温度変化から熱量を計算する関数
+    Calculates heat based on mass, specific heat, and temperature change.
+    
+    Parameters:
+    mass (float): 質量 (kg)
+    specific_heat (float): 比熱 (J/kg·K)
+    temperature_change (float): 温度変化 (K)
+    
+    Returns:
+    float: 熱量 (J)
+    """
+    return mass * specific_heat * temperature_change
+
+# 4.1.2 熱量と比熱 (Heat and Specific Heat)
+def specific_heat_calculation(heat, mass, temperature_change):
+    """
+    熱量、質量、温度変化から比熱を計算する関数
+    Calculates specific heat based on heat, mass, and temperature change.
+    
+    Parameters:
+    heat (float): 熱量 (J)
+    mass (float): 質量 (kg)
+    temperature_change (float): 温度変化 (K)
+    
+    Returns:
+    float: 比熱 (J/kg·K)
+    """
+    return heat / (mass * temperature_change)
+
+
+# 4.2.2 熱力学の第 1 法則 (First Law of Thermodynamics)
+def first_law_thermodynamics(internal_energy_change, heat_added, work_done):
+    """
+    熱力学の第1法則を用いて内部エネルギーの変化を計算する関数
+    Calculates the change in internal energy using the First Law of Thermodynamics.
+    
+    Parameters:
+    internal_energy_change (float): 内部エネルギーの変化 (J)
+    heat_added (float): 加えられた熱量 (J)
+    work_done (float): 行われた仕事 (J)
+    
+    Returns:
+    float: 内部エネルギーの変化 (J)
+    """
+    return heat_added - work_done
+
+# 4.2.4 熱力学の第 2 法則 (Second Law of Thermodynamics)
+def second_law_efficiency(work_output, heat_input):
+    """
+    熱力学の第2法則を用いて効率を計算する関数
+    Calculates efficiency using the Second Law of Thermodynamics.
+    
+    Parameters:
+    work_output (float): 仕事出力 (J)
+    heat_input (float): 熱入力 (J)
+    
+    Returns:
+    float: 熱効率 (Efficiency, 0-1)
+    """
+    return work_output / heat_input
+
+
+# 4.3.2 状態方程式 (Equation of State for Ideal Gases)
+def ideal_gas_pressure(volume, moles, temperature):
+    """
+    理想気体の状態方程式を使って圧力を計算する関数
+    Calculates pressure using the ideal gas law.
+    
+    Parameters:
+    volume (float): 体積 (m^3)
+    moles (float): モル数 (mol)
+    temperature (float): 温度 (K)
+    
+    Returns:
+    float: 圧力 (Pa)
+    """
+    R = 8.314  # J/(mol·K), 気体定数
+    return (moles * R * temperature) / volume
+
+# 4.3.3 定容比熱と定圧比熱 (Specific Heats at Constant Volume and Pressure)
+def specific_heat_ratio(cp, cv):
+    """
+    定圧比熱と定容比熱から比熱比を計算する関数
+    Calculates the specific heat ratio.
+    
+    Parameters:
+    cp (float): 定圧比熱 (J/kg·K)
+    cv (float): 定容比熱 (J/kg·K)
+    
+    Returns:
+    float: 比熱比 (dimensionless)
+    """
+    return cp / cv
+
+# 4.3.4 状態変化 (State Change for Ideal Gas)
+def state_change_initial_final_pressure(initial_pressure, initial_temperature, final_temperature):
+    """
+    初期圧力と温度変化から最終圧力を計算する関数
+    Calculates the final pressure based on the initial pressure and temperature change.
+    
+    Parameters:
+    initial_pressure (float): 初期圧力 (Pa)
+    initial_temperature (float): 初期温度 (K)
+    final_temperature (float): 最終温度 (K)
+    
+    Returns:
+    float: 最終圧力 (Pa)
+    """
+    return initial_pressure * (final_temperature / initial_temperature)
+
+
+# テスト例 (Example usage)
+
+# 4.1.1 温度と熱
+mass = 2.0  # kg
+specific_heat = 4184  # J/kg·K (for water)
+temperature_change = 10.0  # K
+heat = calculate_heat(mass, specific_heat, temperature_change)
+print(f"熱量 (Heat): {heat} J")
+
+# 4.1.2 比熱の計算
+heat = 10000  # J
+mass = 2.0  # kg
+temperature_change = 20.0  # K
+specific_heat_value = specific_heat_calculation(heat, mass, temperature_change)
+print(f"比熱 (Specific Heat): {specific_heat_value} J/kg·K")
+
+# 4.2.2 熱力学の第1法則
+heat_added = 500  # J
+work_done = 200  # J
+internal_energy_change = first_law_thermodynamics(0, heat_added, work_done)
+print(f"内部エネルギーの変化 (Change in Internal Energy): {internal_energy_change} J")
+
+# 4.2.4 熱力学の第2法則
+work_output = 300  # J
+heat_input = 500  # J
+efficiency = second_law_efficiency(work_output, heat_input)
+print(f"熱効率 (Efficiency): {efficiency * 100}%")
+
+# 4.3.2 状態方程式
+volume = 0.1  # m^3
+moles = 1.0  # mol
+temperature = 300  # K
+pressure = ideal_gas_pressure(volume, moles, temperature)
+print(f"理想気体の圧力 (Ideal Gas Pressure): {pressure} Pa")
+
+# 4.3.3 定容比熱と定圧比熱の比
+cp = 1005  # J/kg·K (for air)
+cv = 718  # J/kg·K (for air)
+gamma = specific_heat_ratio(cp, cv)
+print(f"比熱比 (Specific Heat Ratio γ): {gamma}")
+
+# 4.3.4 状態変化
+initial_pressure = 101325  # Pa
+initial_temperature = 273  # K
+final_temperature = 300  # K
+final_pressure = state_change_initial_final_pressure(initial_pressure, initial_temperature, final_temperature)
+print(f"最終圧力 (Final Pressure): {final_pressure} Pa")
