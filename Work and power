@@ -1,0 +1,96 @@
+import numpy as np
+
+# ニュートンの法則 (Newton's Law)
+# F = m * a (力 = 質量 * 加速度)
+
+def newton_law(mass, acceleration):
+    """
+    ニュートンの法則を使って力を計算する関数
+    Calculates force using Newton's law.
+    
+    Parameters:
+    mass (float): 質量 (kg)
+    acceleration (float): 加速度 (m/s^2)
+    
+    Returns:
+    float: 力 (N)
+    """
+    force = mass * acceleration
+    return force
+
+
+# 仕事と動力 (Work and Power)
+# Work = F * d, Power = Work / time
+
+def calculate_work(force, distance):
+    """
+    力と距離から仕事を計算する関数
+    Calculates work using force and distance.
+    
+    Parameters:
+    force (float): 力 (N)
+    distance (float): 距離 (m)
+    
+    Returns:
+    float: 仕事 (J)
+    """
+    work = force * distance
+    return work
+
+def calculate_power(work, time):
+    """
+    仕事と時間から動力を計算する関数
+    Calculates power using work and time.
+    
+    Parameters:
+    work (float): 仕事 (J)
+    time (float): 時間 (s)
+    
+    Returns:
+    float: 動力 (W)
+    """
+    power = work / time
+    return power
+
+
+# 摩擦 (Friction)
+# 静摩擦力： F_friction = μ * N
+
+def calculate_friction(coefficient, normal_force):
+    """
+    摩擦係数と法線力から摩擦力を計算する関数
+    Calculates friction force using the coefficient of friction and normal force.
+    
+    Parameters:
+    coefficient (float): 摩擦係数
+    normal_force (float): 法線力 (N)
+    
+    Returns:
+    float: 摩擦力 (N)
+    """
+    friction_force = coefficient * normal_force
+    return friction_force
+
+
+# テスト例 (Example usage)
+
+# ニュートンの法則の例
+mass = 10.0  # kg
+acceleration = 5.0  # m/s^2
+force = newton_law(mass, acceleration)
+print(f"力 (Force): {force} N")
+
+# 仕事と動力の例
+distance = 20.0  # m
+work = calculate_work(force, distance)
+print(f"仕事 (Work): {work} J")
+
+time = 10.0  # s
+power = calculate_power(work, time)
+print(f"動力 (Power): {power} W")
+
+# 摩擦の例
+coefficient_of_friction = 0.4
+normal_force = 50.0  # N
+friction_force = calculate_friction(coefficient_of_friction, normal_force)
+print(f"摩擦力 (Friction Force): {friction_force} N")
